@@ -1,3 +1,3 @@
 # EOS-ASCII
 
-https://jbenedict.com/EOS-ASCII
+https://jbenedict.com/eos-ascii
