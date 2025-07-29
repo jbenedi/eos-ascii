@@ -17,6 +17,6 @@ This is a browser-based tool for converting lighting cue sheets (exported in CSV
 - Cue numbers must be unique
 - Duration should be in seconds (ex. `2.5`)
 - Auto follow times are optional but must be numeric
-- Not all fields have to be used, only map which ones you want to import
+- Not all fields have to be used, only map the ones you want to import
 
 > https://jbenedict.com/eos-ascii
