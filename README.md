@@ -19,5 +19,4 @@ This is a browser-based tool for converting lighting cue sheets (exported in CSV
 - Auto follow times are optional but must be numeric
 - Not all fields have to be used, only map which ones you want to import
 
-
 > https://jbenedict.com/eos-ascii
