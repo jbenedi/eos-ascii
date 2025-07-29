@@ -7,7 +7,8 @@
   <style>
     body {
       font-family: sans-serif;
-      background-color: #f9f9f9;
+      background-color: #1e1e1e;
+      color: #f0f0f0;
       margin: 0;
       padding: 2rem;
     }
@@ -15,38 +16,44 @@
       max-width: 800px;
       margin: 0 auto;
       padding: 2rem;
-      background: white;
+      background: #2c2c2c;
       border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
     }
     .drop-zone {
-      border: 2px dashed #bbb;
+      border: 2px dashed #666;
       padding: 2rem;
       text-align: center;
       margin-bottom: 1rem;
-      color: #666;
+      color: #ccc;
       border-radius: 8px;
     }
     .drop-zone.hover {
-      border-color: #007bff;
-      background-color: #e6f0ff;
+      border-color: #3399ff;
+      background-color: #2a3b55;
     }
     .file-input {
       margin-bottom: 1rem;
+      color: white;
     }
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 1rem;
+      background-color: #1a1a1a;
+      color: white;
     }
     th, td {
       padding: 0.5rem;
-      border: 1px solid #ddd;
+      border: 1px solid #444;
       text-align: left;
     }
     select {
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
       padding: 0.5rem;
+      background-color: #2c2c2c;
+      color: white;
+      border: 1px solid #555;
     }
     button {
       padding: 0.75rem 1.5rem;
@@ -57,8 +64,14 @@
       cursor: pointer;
     }
     button:disabled {
-      background-color: #ccc;
+      background-color: #555;
       cursor: not-allowed;
+    }
+    fieldset {
+      border: 1px solid #555 !important;
+    }
+    legend {
+      color: #ccc;
     }
   </style>
 </head>
@@ -81,7 +94,7 @@
       </fieldset>
     </div>
 
-    <button id="convertBtn" disabled>Convert to USITT ASCII</button>
+    <br><button id="convertBtn" disabled>Convert to USITT ASCII</button>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
