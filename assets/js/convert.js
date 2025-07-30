@@ -44,7 +44,7 @@
       }
 
       Papa.parse(file, {
-        header: true,
+        header: false,
         skipEmptyLines: true,
         complete: function(results) {
           parsedCSV = results.data;
