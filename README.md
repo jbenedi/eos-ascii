@@ -14,12 +14,11 @@ This is a browser-based tool for converting lighting cue sheets (exported in CSV
 
 ## Formatting Your Sheet
 
-- Your cue sheet should include a header row
 - Each cue should be on its own line
 - Cue numbers must be unique
 - Duration should be in seconds (ex. `2.5`)
 - Auto follow times are optional but must be numeric
-- Not all fields have to be used, only map the ones you want to import
+- All fields except cue numbers are optional, only map the ones you want to import
 
 ## Features To Add
 
