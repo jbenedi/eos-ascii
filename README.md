@@ -24,7 +24,6 @@ This is a browser-based tool for converting lighting cue sheets (exported in CSV
 
 - [ ] Split Duration into Uptime/Downtime
 - [ ] Cue Parts
-- [ ] Hangs
 - [x] ~Follows~
 
 > https://jbenedict.com/eos-ascii
