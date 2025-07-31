@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cue Sheet to USITT ASCII Converter</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #1e1e1e;
+      color: #f0f0f0;
+      margin: 0;
+      padding: 2rem;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+      background: #2c2c2c;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+    .drop-zone {
+      border: 2px dashed #666;
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 1rem;
+      color: #ccc;
+      border-radius: 8px;
+    }
+    .drop-zone.hover {
+      border-color: #3399ff;
+      background-color: #2a3b55;
+    }
+    .file-input {
+      margin-bottom: 1rem;
+      color: white;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      background-color: #1a1a1a;
+      color: white;
+    }
+    th, td {
+      padding: 0.5rem;
+      border: 1px solid #444;
+      text-align: left;
+    }
+    select {
+      margin-bottom: 0.5rem;
+      padding: 0.5rem;
+      background-color: #2c2c2c;
+      color: white;
+      border: 1px solid #555;
+    }
+    button {
+      padding: 0.75rem 1.5rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:disabled {
+      background-color: #555;
+      cursor: not-allowed;
+    }
+    fieldset {
+      border: 1px solid #555 !important;
+    }
+    legend {
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Cue Sheet to USITT ASCII Converter</h1>
+
+    <input type="file" id="csvInput" class="file-input" accept=".csv" style="cursor: pointer;"/>
+
+    <div id="dropZone" class="drop-zone">
+      Drag and drop a CSV file here
+    </div>
+
+    <div id="preview"></div>
+
+    <div id="mapping-container" style="display:none; margin-top:1rem;">
+      <fieldset style="padding:1rem; border:1px solid #ccc; border-radius:8px;">
+        <legend><strong>Column Mapping</strong></legend>
+        <div id="mapping"></div>
+      </fieldset>
+    </div>
+
+    <br><button id="convertBtn" disabled>Convert to USITT ASCII</button>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <script>
+    const csvInput = document.getElementById('csvInput');
+    const dropZone = document.getElementById('dropZone');
+    const preview = document.getElementById('preview');
+    const mapping = document.getElementById('mapping');
+    const convertBtn = document.getElementById('convertBtn');
+
+    let parsedCSV = [];
+
+    const fields = [
+      'Cue Numbers',
+      'Cue Durations',
+      'Cue Labels',
+      'Cue Notes',
+      'Cue Scenes',
+      'Blocks',
+      'Auto Follows'
+    ];
+
+    csvInput.addEventListener('change', e => {
+      const file = e.target.files[0];
+      handleFile(file);
+    });
+
+    dropZone.addEventListener('dragover', e => {
+      e.preventDefault();
+      dropZone.classList.add('hover');
+    });
+
+    dropZone.addEventListener('dragleave', () => {
+      dropZone.classList.remove('hover');
+    });
+
+    dropZone.addEventListener('drop', e => {
+      e.preventDefault();
+      dropZone.classList.remove('hover');
+      const file = e.dataTransfer.files[0];
+      handleFile(file);
+    });
+
+    function handleFile(file) {
+      if (!file.name.endsWith('.csv')) {
+        alert('Please upload a CSV file.');
+        return;
+      }
+
+      Papa.parse(file, {
+        header: false,
+        skipEmptyLines: true,
+        complete: function(results) {
+          parsedCSV = results.data;
+          showPreview(parsedCSV);
+          showMappingDropdowns(parsedCSV);
+        }
+      });
+    }
+
+    function showPreview(data) {
+      if (data.length === 0) return;
+      const headers = Object.keys(data[0]);
+      let html = '<table><thead><tr>' + headers.map((h, i) => `<th>${i + 1}</th>`).join('') + '</tr></thead><tbody>';
+      data.slice(0, 5).forEach(row => {
+        html += '<tr>' + headers.map(h => `<td>${row[h]}</td>`).join('') + '</tr>';
+      });
+      html += '</tbody></table>';
+      preview.innerHTML = html;
+    }
+
+    function showMappingDropdowns(data) {
+      const headers = Object.keys(data[0]);
+      let html = '';
+      fields.forEach(field => {
+        html += `<label style="display:block; margin-top:0.25rem; font-weight:bold;">${field}</label>`;
+        html += `<select id="field-${field}" data-field="${field}" style="width:100%; max-width:300px;">`;
+        html += '<option value="">-- Select Column --</option>';
+        headers.forEach((h, i) => {
+          html += `<option value="${i}">Column ${i + 1}</option>`;
+        });
+        html += '</select><br/>';
+      });
+      mapping.innerHTML = html;
+      document.getElementById('mapping-container').style.display = 'block';
+      convertBtn.disabled = false;
+
+      convertBtn.onclick = () => {
+        const selects = document.querySelectorAll('select[data-field]');
+        const columnMap = {};
+        selects.forEach(select => {
+          const field = select.getAttribute('data-field');
+          const columnIndex = parseInt(select.value);
+          if (!isNaN(columnIndex)) columnMap[field] = columnIndex;
+        });
+
+        const lines = [
+          "Manufacturer ETC",
+          "Console Eos",
+          "",
+          "$CueList 1",
+          "   Text Imported from USITT ASCII",
+          ""
+        ];
+
+        parsedCSV.forEach(row => {
+          const headers = Object.keys(row);
+          const cue = row[headers[columnMap['Cue Numbers']]];
+          if (!cue) return;
+
+          lines.push(`Cue ${cue} 1`);
+
+          // Label
+          if (columnMap['Cue Labels']) {
+            const label = row[headers[columnMap['Cue Labels']]];
+            if (label && label.trim()) {
+              lines.push(`   Text ${label.trim()}`);
+            }
+          }
+
+          // Duration
+          if (columnMap['Cue Durations']) {
+            const dur = row[headers[columnMap['Cue Durations']]];
+            if (dur && dur.trim()) {
+              lines.push(`   Up ${dur.trim()}`);
+              lines.push(`   $$TimeUp ${dur.trim()} 0 0 1`);
+              lines.push(`   Down ${dur.trim()}`);
+              lines.push(`   $$TimeDown ${dur.trim()} 0 1 1`);
+            }
+          }
+
+          // Block
+          if (columnMap['Blocks']) {
+            const block = row[headers[columnMap['Blocks']]];
+            if (block && block.trim()) {
+              const b = block.trim().toUpperCase();
+              if (b === 'B') lines.push(`   $$Block`);
+              else if (b === 'I') lines.push(`   $$IntBlock`);
+            }
+          }
+
+          // Chan placeholder
+          // lines.push(`   Chan 999 0`);
+
+          // Follow
+          if (columnMap['Auto Follows']) {
+            const follow = row[headers[columnMap['Auto Follows']]];
+            if (follow && follow.trim()) {
+              lines.push(`   FollowOn ${follow.trim()}`);
+              lines.push(`   $$Follow ${follow.trim()}`);
+            }
+          }
+
+          // Cue Notes
+          if (columnMap['Cue Notes']) {
+            const note = row[headers[columnMap['Cue Notes']]];
+            if (note && note.trim()) {
+              lines.push(`   $$CueNotes ${note.trim()}`);
+            }
+          }
+
+          // Scene Text
+          if (columnMap['Cue Scenes']) {
+            const scene = row[headers[columnMap['Cue Scenes']]];
+            if (scene && scene.trim()) {
+              lines.push(`   $$SceneText ${scene.trim()}`);
+            }
+          }
+
+          lines.push(''); // blank line between cues
+        });
+
+        lines.push('EndData');
+
+        const blob = new Blob([lines.join("\n")], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `cue_output_${new Date().toISOString().slice(0,10)}.asc`;
+        a.click();
+        URL.revokeObjectURL(url);
+      };
+    }
+  </script>
+</body>
+</html>
