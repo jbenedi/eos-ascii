@@ -1,9 +1,8 @@
-    body {
+body {
       font-family: sans-serif;
       background-color: #1e1e1e;
       color: #f0f0f0;
       margin: 0;
-      padding: 2rem;
     }
     .container {
       max-width: 800px;
@@ -11,14 +10,14 @@
       padding: 2rem;
       background: #2c2c2c;
       border-radius: 8px;
-      border: 1px solid #454545;
+	  border: 1px solid #454545;
       box-shadow: 0 0 10px rgba(0,0,0,0.5);
     }
     .spacebtm {
-      padding-bottom: 50px;
+      padding-bottom: 100px;
     }
     .spacetop {
-      padding-top: 100px;
+      padding-top: 150px;
     }
     .drop-zone {
       border: 2px dashed #777;
