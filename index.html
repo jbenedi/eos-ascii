@@ -8,9 +8,103 @@
   <script src="https://jbenedict.com/assets/js/main.js" type="text/javascript" defer></script>
   <link rel="stylesheet" media="screen" href="https://jbenedict.com/assets/css/main.css">
   <link rel="stylesheet" media="screen" href="https://jbenedict.com/assets/css/contact.css">
-  <link rel="stylesheet" media="screen" href="https://jbenedict.com/eos-ascii/assets/css/page.css">
+  <link rel="stylesheet" media="screen" href="https://jbenedict.com/eos-ascii/assets/css/">
   <title>EOS ASCII Converter</title>
   <title>Cue Sheet to USITT ASCII Converter</title>
+	
+	
+<style>
+
+
+
+
+    body {
+      font-family: sans-serif;
+      background-color: #1e1e1e;
+      color: #f0f0f0;
+      margin: 0;
+      padding: 2rem;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+      background: #2c2c2c;
+      border-radius: 8px;
+	  border: 1px solid #454545;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+    .spacebtm {
+      padding-bottom: 50px;
+    }
+    .spacetop {
+      padding-top: 100px;
+    }
+    .drop-zone {
+      border: 2px dashed #777;
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 1rem;
+      color: #ccc;
+      border-radius: 8px;
+    }
+    .drop-zone.hover {
+      border-color: #3399ff;
+      background-color: #2a3b55;
+    }
+    .file-input {
+      margin-bottom: 1rem;
+      color: white;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      background-color: #1a1a1a;
+      color: white;
+    }
+    th, td {
+      padding: 0.5rem;
+      border: 1px solid #444;
+      text-align: left;
+    }
+    select {
+      margin-bottom: 0.5rem;
+      padding: 0.5rem;
+      background-color: #2c2c2c;
+      color: white;
+      border: 1px solid #555;
+    }
+    button {
+      padding: 0.75rem 1.5rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:disabled {
+      background-color: #555;
+      cursor: not-allowed;
+    }
+    fieldset {
+      border: 1px solid #555 !important;
+    }
+    legend {
+      color: #ccc;
+    }
+
+
+
+
+
+
+	</style>
+	
+	
+	
+	
+	
 </head>
 <body>
 <div id="importheader"></div>
@@ -36,6 +130,35 @@
 
     <br><button id="convertBtn" disabled>Convert to USITT ASCII</button>
   </div>
+
+  <br>
+	
+  <div class="container">
+
+	Cue Sheet to USITT ASCII Converter
+
+	<br><br>This is a browser-based tool for converting lighting cue sheets (exported in CSV format) into USITT ASCII `.asc` files for importing into ETC Eos lighting consoles. You can import Cue Numbers, Cue Durations, Cue Labels, Cue Notes, Cue Scenes, Blocks (B = Full, I = Intensity), and Auto Follows (in seconds).
+
+	<br><br>How to Use:
+
+	<br><br>1. Go to https://jbenedict.com/eos-ascii
+	<br>2. Drag and drop your .csv file or use the file picker, a preview of your file will automatically pop up
+	<br>3. Map whichever fields you want import into EOS to their corresponding column
+	<br>4. Click "Convert to USITT ASCII"
+	<br>5. Your .asc file will download automatically
+	<br>6. In EOS, create a new showfile
+	<br>7. Navigate to File > Import > USITT ASCII > As Library Fixtures, then select the `.asc` file
+
+	<br><br>Formatting Your Sheet:
+
+	<br><br>- Each cue should be on its own line
+	<br>- Cue numbers must be unique
+	<br>- Duration should be in seconds (ex. `2` or `7`)
+	<br>- Auto follow times are optional but must be numeric
+	<br>- All fields except cue numbers are optional, only map the ones you want to import
+
+  </div>
+	
   <br><a href="https://jbenedict.com/eos-ascii/standalone" style="padding-left: 20%; color: #222222">Click here if this page isnt working<a>
   <div class="spacebtm"></div>
 
@@ -47,6 +170,7 @@
     <script src="https://jbenedict.com/assets/js/app.js"></script>
     <link rel="stylesheet" media="screen" href="https://jbenedict.com/assets/css/particles.css">
   </div>
+
 </div>
 </body>
 </html>
