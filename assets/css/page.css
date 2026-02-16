@@ -11,6 +11,7 @@
       padding: 2rem;
       background: #2c2c2c;
       border-radius: 8px;
+      border: 1px solid #454545;
       box-shadow: 0 0 10px rgba(0,0,0,0.5);
     }
     .spacebtm {
@@ -20,7 +21,7 @@
       padding-top: 100px;
     }
     .drop-zone {
-      border: 2px dashed #666;
+      border: 2px dashed #777;
       padding: 2rem;
       text-align: center;
       margin-bottom: 1rem;
