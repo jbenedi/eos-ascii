@@ -11,6 +11,7 @@ This is a browser-based tool for converting lighting cue sheets (exported in CSV
 5. Your `.asc` file will download automatically
 6. In EOS, create a new showfile
 7. Navigate to File > Import > USITT ASCII > As Library Fixtures, then select the `.asc` file
+8. If you're importing into an existing showfile, MAKE SURE TO SELECT "MERGE DATA" or your showfile data will be overwritten
 
 ## Formatting Your Sheet
 
